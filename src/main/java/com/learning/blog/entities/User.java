@@ -1,5 +1,7 @@
 package com.learning.blog.entities;
 
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,10 +15,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
+@Component
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "first_name")

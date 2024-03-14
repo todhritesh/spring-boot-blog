@@ -8,6 +8,7 @@ import com.learning.blog.payloads.UserDto;
 
 @Component
 public class UserMapper {
+
     @Autowired
     User user;
 
@@ -20,6 +21,7 @@ public class UserMapper {
         this.userDto.setEmail(user.getEmail());
         this.userDto.setAbout(user.getAbout());
         this.userDto.setId(user.getId());
+        this.userDto.setPassword(user.getPassword());
 
         return this.userDto;
     }
@@ -29,7 +31,7 @@ public class UserMapper {
         this.user.setEmail(dto.getEmail());
         this.user.setAbout(dto.getAbout());
         this.user.setId(dto.getId());
-
+        this.user.setPassword(dto.getPassword());
         return this.user;
     }
 }
