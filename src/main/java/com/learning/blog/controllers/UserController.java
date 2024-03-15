@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.learning.blog.entities.User;
 import com.learning.blog.payloads.ApiResponse;
 import com.learning.blog.payloads.UserDto;
 import com.learning.blog.services.UserService;
+
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("api/users")
@@ -27,15 +29,13 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-        System.out.println("hello");
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         UserDto createdUserDto = this.userService.createUser(userDto);
         return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        System.out.println("in gett all usersss");
         return ResponseEntity.ok(this.userService.getAllUsers());
     }
 

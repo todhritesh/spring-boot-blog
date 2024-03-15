@@ -1,13 +1,13 @@
 package com.learning.blog.payloads;
-
-import org.springframework.stereotype.Component;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Component
 public class UserDto {
     public UserDto(UserDto dto) {
         this.id=dto.id;
@@ -18,14 +18,24 @@ public class UserDto {
         this.about=dto.about;
     }
 
+
     private int id;
 
+    @NotBlank(message = "First name should not be empty")
+    @Size(min = 3, max = 20 , message = "First name should must be 3 - 20 chars")
     private String firstName;
+    
 
+    @NotBlank(message = "Last name should not be empty")
+    @Size(min = 3, max = 20 , message = "Last name should must be 3 - 20 chars")
     private String lastName;
-
+    
+    @Email(message = "Email must be valid")
+    @NotBlank(message = "Email should not be empty")
     private String email;
     
+    @NotBlank(message = "Password should not be empty")
+    @Size(min = 6, max = 10 , message = "Password should must be 6 - 10 chars")
     private String password;
     
     private String about;

@@ -12,8 +12,7 @@ public class UserMapper {
     @Autowired
     User user;
 
-    @Autowired
-    UserDto userDto;
+    UserDto userDto = new UserDto();
 
     public UserDto toDto(User user){
         this.userDto.setFirstName(user.getFirstName());
