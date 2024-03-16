@@ -2,17 +2,15 @@ package com.learning.blog.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.learning.blog.entities.User;
 import com.learning.blog.payloads.UserDto;
 
 @Component
 public class UserMapper {
 
-    @Autowired
-    User user;
+    private User user = new User();
 
-    UserDto userDto = new UserDto();
+    private UserDto userDto = new UserDto();
 
     public UserDto toDto(User user){
         this.userDto.setFirstName(user.getFirstName());

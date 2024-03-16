@@ -1,12 +1,14 @@
 package com.learning.blog.entities;
 
-import org.springframework.stereotype.Component;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-@Component
 public class User {
 
     @Id
@@ -35,4 +36,7 @@ public class User {
     private String password;
     
     private String about;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user")
+    private List<Post> posts;
 }

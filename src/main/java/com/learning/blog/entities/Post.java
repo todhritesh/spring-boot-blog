@@ -1,40 +1,41 @@
 package com.learning.blog.entities;
 
-import java.util.List;
+import java.util.Date;
 
-import org.springframework.stereotype.Component;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "posts")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Category {
-
+public class Post {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false , length = 20)
     private String title;
 
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "category")
-    private List<Post> posts;
+    @Column(nullable = false)
+    private Date createdAt;
+
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Category category;
+    
 }

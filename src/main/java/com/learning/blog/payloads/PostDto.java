@@ -1,6 +1,6 @@
 package com.learning.blog.payloads;
 
-import com.learning.blog.entities.Category;
+import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,28 +10,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
 @Setter
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class CategoryDto {
+public class PostDto {
+    private Integer id;
 
-
-    private long id;
-
-    @NotBlank(message = "Title is required")
+     @NotBlank(message = "Title is required")
     @Size(min = 2,message = "title must have min 2 chars")
     private String title;
     
     @NotBlank(message = "Description is required")
-    @Size(min = 2,message = "title must have min 10 chars")
+    @Size(min = 2,message = "Description must have min 10 chars")
     private String description;
 
-    public CategoryDto (Category category) {
-        this.id = category.getId();
-        this.title = category.getTitle();
-        this.description = category.getDescription();
-    }
-
+    private UserDto user;
+    private CategoryDto category;
+    private Date createdAt;
+    
 }

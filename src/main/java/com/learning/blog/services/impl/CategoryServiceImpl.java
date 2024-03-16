@@ -3,6 +3,7 @@ package com.learning.blog.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public CategoryDto createCategory(CategoryDto categoryDto) {
-        Category savedCategory = this.categoryRepository.save(this.categoryMapper.toEntity(categoryDto));
+        Category savedCategory = this.categoryRepository.save(this.modelMapper.map(categoryDto, Category.class));
         return this.categoryMapper.toDto(savedCategory);
     }
 

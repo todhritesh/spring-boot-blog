@@ -1,6 +1,5 @@
 package com.learning.blog.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.learning.blog.entities.Category;
@@ -9,8 +8,7 @@ import com.learning.blog.payloads.CategoryDto;
 @Component
 public class CategoryMapper {
     
-    @Autowired
-    private Category category;
+    private Category category = new Category();
 
     private CategoryDto categoryDto = new CategoryDto();
 
