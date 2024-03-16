@@ -33,9 +33,11 @@ public class Post {
     private Date createdAt;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User user;
-
+    
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Category category;
     
 }
