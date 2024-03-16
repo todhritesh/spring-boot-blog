@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.learning.blog.payloads.ApiResponse;
 import com.learning.blog.payloads.PostDto;
+import com.learning.blog.payloads.UserDto;
+import com.learning.blog.services.CategoryService;
 import com.learning.blog.services.PostService;
+import com.learning.blog.services.UserService;
 
 import jakarta.validation.Valid;
 
@@ -44,6 +47,18 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity<ApiResponse> getAllPost(){
         List<PostDto> posts = this.postService.getAllPost();
+        return new ResponseEntity<>(new ApiResponse("Posts fetched successfully",true,posts),HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}/posts")
+    public ResponseEntity<ApiResponse> getAllPostByUser(@PathVariable("userId") Integer userId){
+        List<PostDto> posts = this.postService.getAllPostByUser(userId);
+        return new ResponseEntity<>(new ApiResponse("Posts fetched successfully",true,posts),HttpStatus.OK);
+    }
+
+    @GetMapping("/category/{categoryId}/posts")
+    public ResponseEntity<ApiResponse> getAllPostByCategory(@PathVariable("categoryId") Integer categoryId){
+        List<PostDto> posts = this.postService.getAllPostByCategory(categoryId);
         return new ResponseEntity<>(new ApiResponse("Posts fetched successfully",true,posts),HttpStatus.OK);
     }
 
