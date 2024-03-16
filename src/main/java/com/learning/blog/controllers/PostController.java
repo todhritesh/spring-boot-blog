@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.learning.blog.payloads.ApiResponse;
 import com.learning.blog.payloads.PostDto;
-import com.learning.blog.payloads.UserDto;
-import com.learning.blog.services.CategoryService;
+import com.learning.blog.payloads.PostPaginationResponse;
 import com.learning.blog.services.PostService;
-import com.learning.blog.services.UserService;
 
 import jakarta.validation.Valid;
 
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -45,9 +44,11 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<ApiResponse> getAllPost(){
-        List<PostDto> posts = this.postService.getAllPost();
-        return new ResponseEntity<>(new ApiResponse("Posts fetched successfully",true,posts),HttpStatus.OK);
+    public ResponseEntity<ApiResponse> getAllPost(
+        @RequestParam(name = "pageNo", required = false, defaultValue = "0") Integer pageNo, 
+        @RequestParam(name = "pageSize", required = false, defaultValue = "2") Integer pageSize){
+        PostPaginationResponse postPaginationResponse = this.postService.getAllPost(pageNo,pageSize);
+        return new ResponseEntity<>(new ApiResponse("Posts fetched successfully",true,postPaginationResponse),HttpStatus.OK);
     }
 
     @GetMapping("/user/{userId}/posts")

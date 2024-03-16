@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.learning.blog.entities.Category;
@@ -14,6 +17,7 @@ import com.learning.blog.entities.User;
 import com.learning.blog.exceptions.ResourceNotFoundException;
 import com.learning.blog.payloads.CategoryDto;
 import com.learning.blog.payloads.PostDto;
+import com.learning.blog.payloads.PostPaginationResponse;
 import com.learning.blog.payloads.UserDto;
 import com.learning.blog.repositories.PostRepository;
 import com.learning.blog.services.CategoryService;
@@ -54,10 +58,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPost() {
-        List<Post> posts = this.postRepository.findAll();
+    public PostPaginationResponse getAllPost(Integer pageNo, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Post> pagePosts = this.postRepository.findAll(pageable);
+
+        List<Post> posts = pagePosts.getContent();
         List<PostDto> postDtos = posts.stream().map((post)->this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
-        return postDtos;
+        PostPaginationResponse postPaginationResponse = new PostPaginationResponse(postDtos, pagePosts.getTotalElements(), pagePosts.getTotalPages(), pagePosts.getSize(), pagePosts.getNumber(),pagePosts.isLast());
+        return postPaginationResponse;
     }
 
     @Override
