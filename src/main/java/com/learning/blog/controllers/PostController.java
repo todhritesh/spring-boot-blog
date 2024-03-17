@@ -46,8 +46,11 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity<ApiResponse> getAllPost(
         @RequestParam(name = "pageNo", required = false, defaultValue = "0") Integer pageNo, 
-        @RequestParam(name = "pageSize", required = false, defaultValue = "2") Integer pageSize){
-        PostPaginationResponse postPaginationResponse = this.postService.getAllPost(pageNo,pageSize);
+        @RequestParam(name = "pageSize", required = false, defaultValue = "2") Integer pageSize,
+        @RequestParam(name = "sortBy", required = false, defaultValue = "id") String sortBy,
+        @RequestParam(name = "sortOrder", required = false, defaultValue = "asc") String sortOrder
+        ){
+        PostPaginationResponse postPaginationResponse = this.postService.getAllPost(pageNo,pageSize,sortBy, sortOrder);
         return new ResponseEntity<>(new ApiResponse("Posts fetched successfully",true,postPaginationResponse),HttpStatus.OK);
     }
 
