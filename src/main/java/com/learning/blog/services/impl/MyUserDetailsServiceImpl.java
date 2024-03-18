@@ -18,15 +18,6 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    // @Override
-    // public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    //     User user = this.userRepository.findByEmail(username)
-    //             .orElseThrow(() -> new ResourceNotFoundException("user", "username " + username, 0));
-    //     return this.modelMapper.map(user, UserDetails.class);
-    // }
 
     @Override
     public UserDetailsService userDetailsService() {

@@ -12,13 +12,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.learning.blog.payloads.ApiResponse;
 
+import io.jsonwebtoken.JwtException;
+
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse> resourceNotFoundException(ResourceNotFoundException e) {
         String msg = e.getMessage();
-        return new ResponseEntity(new ApiResponse(msg,false),HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ApiResponse(msg,false),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ApiResponse> malformedJwtException(JwtException e) {
+        String msg = e.getMessage();
+        System.out.println("============================testtttt====================");
+        return new ResponseEntity<>(new ApiResponse(msg,false),HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
