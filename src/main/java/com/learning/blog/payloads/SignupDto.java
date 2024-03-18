@@ -1,29 +1,23 @@
 package com.learning.blog.payloads;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import com.learning.blog.entities.Role;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+
+@Getter
+@Setter
 @NoArgsConstructor
-@JsonIgnoreProperties(value = {"password"})
-public class UserDto {
-    public UserDto(UserDto dto) {
-        this.id=dto.id;
-        this.firstName=dto.firstName;
-        this.lastName=dto.lastName;
-        this.email=dto.email;
-        this.password=dto.password;
-        this.about=dto.about;
-    }
-
-
-    private int id;
-
+@AllArgsConstructor
+@ToString
+public class SignupDto  {
     @NotBlank(message = "First name should not be empty")
     @Size(min = 3, max = 20 , message = "First name should must be 3 - 20 chars")
     private String firstName;
@@ -40,7 +34,8 @@ public class UserDto {
     @NotBlank(message = "Password should not be empty")
     @Size(min = 6, max = 10 , message = "Password should must be 6 - 10 chars")
     private String password;
-    private Role role;
 
+    private Role role;
+    
     private String about;
 }

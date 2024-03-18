@@ -40,6 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if(StringUtils.isEmpty(authHeaders) || !StringUtils.startsWith(authHeaders, "Bearer ")){
             filterChain.doFilter(request, response);
+            return;
         }
         
         jwt = authHeaders.substring(7);

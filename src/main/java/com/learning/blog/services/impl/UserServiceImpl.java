@@ -3,6 +3,7 @@ package com.learning.blog.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,13 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserMapper userMapper;
+    private ModelMapper modelMapper;
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        User user = userMapper.toEntity(userDto);
+        User user = this.modelMapper.map(userDto, User.class);
         User savedUser = this.userRepository.save(user);
-        return userMapper.toDto(savedUser);
+        return this.modelMapper.map(savedUser, UserDto.class);
     }
 
     @Override
@@ -40,11 +41,8 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAllUsers() {
         List<User> users = this.userRepository.findAll();
         List<UserDto> usersDto = new ArrayList<>();
-        for (User user : users) {
-            UserDto u = new UserDto(this.userMapper.toDto(user));
-            System.out.println(u +"========check====");
-            
-            usersDto.add(u);
+        for (User user : users) {            
+            usersDto.add(this.modelMapper.map(user, UserDto.class));
         }
         System.out.println("after for loop========"+usersDto);
          return usersDto;
@@ -53,7 +51,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserById(int userId) {
         User user = this.userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","id", userId));
-        return this.userMapper.toDto(user);
+        return this.modelMapper.map(user, UserDto.class);
     }
 
     @Override
@@ -65,7 +63,13 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userDto.getLastName());
         user.setPassword(userDto.getPassword());
         User updatedUser = this.userRepository.save(user);
-        return this.userMapper.toDto(updatedUser);
+        return this.modelMapper.map(updatedUser, UserDto.class);
+    }
+
+    @Override
+    public UserDto getUserByEmail(String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(()->new ResourceNotFoundException("user", "email "+email, 0));
+        return this.modelMapper.map(user, UserDto.class);
     }
     
 }

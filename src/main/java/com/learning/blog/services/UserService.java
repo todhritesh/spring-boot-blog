@@ -10,4 +10,5 @@ public interface UserService {
     UserDto getUserById(int userId);
     List<UserDto> getAllUsers();
     boolean deleteUser(int userId);
+    UserDto getUserByEmail(String email);
 }

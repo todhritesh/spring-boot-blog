@@ -36,7 +36,7 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 User user = userRepository.findByEmail(username)
                         .orElseThrow(() -> new ResourceNotFoundException("user", "username " + username, 0));
-                return modelMapper.map(user, UserDetails.class);
+                return user;
             }
 
         };
